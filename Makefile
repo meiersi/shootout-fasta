@@ -1,5 +1,6 @@
 GHC = ghc
-CXXFLAGS = -std=c++11 -O3
+CXXFLAGS = -std=c++0x -O3
+# CXXFLAGS = -O3
 GHCFLAGS = -O3 -fllvm -Wall -rtsopts
 CFLAGS = -O3
 
@@ -15,9 +16,18 @@ fastacpp: fasta.cpp
 fastac: fasta.c
 	$(CC) $(CFLAGS) -o $@ $^
 
-hs: fastahs oldfastahs
+hs: fastahs oldfastahs fastabuilderhs fastaword8hs fastastate
 
 fastahs: Fasta.hs
+	$(GHC) $(GHCFLAGS) --make -o $@ $^
+
+fastabuilderhs: FastaBuilder.hs
+	$(GHC) $(GHCFLAGS) --make -o $@ $^
+
+fastaword8hs: FastaWord8.hs
+	$(GHC) $(GHCFLAGS) --make -o $@ $^
+
+fastastate: FastaState.hs
 	$(GHC) $(GHCFLAGS) --make -o $@ $^
 
 oldfastahs: OldFasta.hs
